@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TableOfContent"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="ToC" Height="160.085" Width="234.659">
     <Grid>
-        
+        <Button x:Name="button" Content="DO IT" HorizontalAlignment="Left" Margin="35,23,0,0" VerticalAlignment="Top" Width="160" Height="79" Click="button_Click" FontSize="48"/>
+
     </Grid>
 </Window>
