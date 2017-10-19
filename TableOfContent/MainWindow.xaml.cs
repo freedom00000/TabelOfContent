@@ -26,18 +26,26 @@ namespace TableOfContent
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-  
-            using (WordprocessingDocument docWord = WordprocessingDocument.Open(filepath,true)) {
+            WordprocessingDocument d = WordprocessingDocument.Open(filepath, true);
+            var doc = d.MainDocumentPart.Document;
+            OpenXmlElement block = doc.Descendants<DocPartGallery>().
+  Where(b => b.Val.HasValue &&
+    (b.Val.Value == "Table of Contents")).FirstOrDefault();
+            if (block == null) {
+                d.Close();
+                using (WordprocessingDocument docWord = WordprocessingDocument.Open(filepath, true)) {
 
                     XElement firstPara =
                          GetXDocument(docWord.MainDocumentPart)
                         .Descendants(w + "p")
                         .FirstOrDefault();
-                if(firstPara.Parent.Name.LocalName != "sdtContent")
-                    AddToc(docWord, firstPara,
-    @"TOC \o '1-3' \h \z \u", "Оглавление", null);
+
+                    if (firstPara.Parent.Name.LocalName != "sdtContent")
+                        AddToc(docWord, firstPara,
+        @"TOC \o '1-3' \h \z \u", "Оглавление", null);
 
 
+                }
             } 
         }
 
@@ -46,7 +54,7 @@ namespace TableOfContent
         {
 
             if (title == null)
-                title = "Оглавsdaweление";
+                title = "Contents";
             if (rightTabPos == null)
                 rightTabPos = 9350;
 
