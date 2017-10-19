@@ -26,6 +26,15 @@ namespace TableOfContent
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
+
+            DirectoryInfo di = new DirectoryInfo(".");
+            foreach (var file in di.GetFiles("*.docx"))
+                file.Delete();
+            DirectoryInfo di2 = new DirectoryInfo("../../../");
+            foreach (var file in di2.GetFiles("*.docx"))
+                file.CopyTo(di.FullName + "/" + file.Name);
+
+
             WordprocessingDocument d = WordprocessingDocument.Open(filepath, true);
             var doc = d.MainDocumentPart.Document;
             OpenXmlElement block = doc.Descendants<DocPartGallery>().
